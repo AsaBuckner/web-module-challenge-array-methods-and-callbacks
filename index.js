@@ -25,11 +25,14 @@ Use getFinals to do the following:
 
 💡 HINT - you should be looking at the stage key inside of the objects
 */
+function getFinals(array){
+    let madeIt = array.filter((element) => {
+      return element.Stage == 'Final';
+    })
+    return madeIt
+} 
 
-function getFinals(/* code here */) {
-    /* code here */
- }
-
+    
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 3: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -38,8 +41,11 @@ Use the higher-order function called getYears to do the following:
 2. Receive a callback function as the second parameter that will take getFinals from task 2 as an argument
 3. Return an array called years containing all of the years in the getFinals data set*/
 
-function getYears(/* code here */) {
-    /* code here */
+function getYears(array,finalsCB) {
+    const yearsArray = finalsCB(array).map((Element) => {
+        return Element.Year
+    })
+    return yearsArray
 }
 
 
@@ -52,9 +58,12 @@ Use the higher-order function getWinners to do the following:
 💡 HINT: Don't worry about ties for now (Please see the README file for info on ties for a stretch goal.)
 4. Returns the names of all winning countries in an array called `winners` */ 
 
-function getWinners(/* code here */) {
-    /* code here */
-}
+
+function getWinners(array,finalsCB) {
+    return finalsCB(array).map(item => 
+ item['Home Team Goals'] > item['Away Team Goals'] ? item['Home Team Name'] : item['Away Team Name']);
+   
+ }
 
 
 
@@ -69,8 +78,10 @@ Use the higher-order function getWinnersByYear to do the following:
 💡 HINT: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
+function getWinnersByYear(data,finalsCB,YearsCB,WinnersCB){
+    const winners = WinnersCB(data,finalsCB)
+    const years = YearsCB(data,finalsCB)
+return winners.map((element, index)=> `In ${years[index]}, ${element} won the world cup!`)
 }
 
 
@@ -88,10 +99,12 @@ Use the higher order function getAverageGoals to do the following:
  
 */
 
-function getAverageGoals(/* code here */) {
-    /* code here */
- }
-
+function getAverageGoals(data) {
+   const averageGoals = data.reduce(function(acc, item){
+    return acc + item['Home Team Goals'] + item['Away Team Goals'];
+   }, 0) 
+   return (averageGoals/ data.length).toFixed(2)
+   }
 
 
 
